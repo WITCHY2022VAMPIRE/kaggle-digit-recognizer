@@ -2,22 +2,27 @@ import numpy as np
 #import pandas as pd
 
 def read():
-    x_size = 784
+    features_train= []
+    labels_train= []
+    features_test= []
+    labels_test= []
     
     print('### Reading training data file...')
-
-    feature_train= []
-    label_train= []
-    feature_test= []
-    label_test= []
     with open('../data/train.csv') as IFILE_TRAIN:
         for i, line in enumerate(IFILE_TRAIN):
-            s= line.strip().split(',')
-            feature_train.append(s[1:])
-            label_train.append(s[0])
+            if i==0: continue
+            data= line.strip().split(',')
+            features_train.append( [ int(d) for d in data[1:] ] )
+            labels_train.append( int(data[0]) )
+    print("Reading complete! Totally %d data" % len(labels_train))
+    
+    print('### Reading testing data file...')
     with open('../data/test.csv') as IFILE_TEST:
         for i, line in enumerate(IFILE_TEST):
-            s= line.strip().split(',')
-            feature_test.append(s[1:])
-            label_test.append(s[0])
-    return feature_train, label_train, feature_test, label_test 
+            if i==0: continue
+            data= line.strip().split(',')
+            features_test.append( [ int(d) for d in data[1:] ] )
+            labels_test.append( int(data[0]) )
+    print("Reading complete! Totally %d data" % len(labels_test))
+    
+    return np.array(features_train), np.array(labels_train), np.array(features_test), np.array(labels_test)

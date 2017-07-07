@@ -6,8 +6,10 @@ def main():
 
     print('Reading data')
     (train_features, train_labels, test_features, test_labels) = rd.read()
-    
-    
+
+    print(train_features.shape)
+    print(train_labels.shape)
+    print(train_features[1,])
     
 
 if __name__ == '__main__':
