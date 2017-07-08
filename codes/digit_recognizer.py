@@ -35,8 +35,25 @@ if __name__ == '__main__':
     #        print("alpha= %f" % alpha)
     n_train_data = len(train_labels)
     n_train = n_train_data - test_split
-    trained_nn = nn.train_neural_network(train_features[:n_train], train_labels[:n_train], rescale_base)
-    wrong_f, wrong_l, wrong_p = nn.test_neural_network(trained_nn, train_features[n_train:n_train_data], train_labels[n_train:n_train_data], rescale_base)
+
+    test_layers=(
+#        (100),
+#        (100, 100),
+#        (100, 100, 100),
+#        (100, 100, 100, 100),
+#        (400),
+#        (400, 200),
+#        (400, 200, 100),
+#        (700),
+#        (700, 700),
+#        (700, 700, 700, 700)
+        (100), (200), (400), (700), (800), (1200), (1600), (3200)
+    )
+    for tlayer in test_layers:
+        print("Layers:", tlayer)
+        trained_nn = nn.train_neural_network(train_features[:n_train], train_labels[:n_train], rescale_base, layers= tlayer)
+        wrong_f, wrong_l, wrong_p = nn.test_neural_network(trained_nn, train_features[n_train:n_train_data], train_labels[n_train:n_train_data], rescale_base)
+        print()
 #    trained_nn = nn.train_neural_network(reduced_features[:n_train], train_labels[:n_train], rescale_base)
 #    wrong_f, wrong_l, wrong_p = nn.test_neural_network(trained_nn, reduced_features[n_train:n_train_data], train_labels[n_train:n_train_data], rescale_base)
 

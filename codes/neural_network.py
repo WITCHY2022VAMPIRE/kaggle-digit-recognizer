@@ -6,12 +6,12 @@ from datetime import datetime # Timing
 def rescale(data_features, max_value, min_value = 0.0):
     return (data_features - min_value) / (max_value - min_value)
 
-def train_neural_network(train_features, train_labels, rescale_base, input_alpha = 0.0001):
+def train_neural_network(train_features, train_labels, rescale_base, input_alpha = 0.0001, layers= (400, 200)):
     # Rescale data
     print('Rescaling training data...')
     train_features_s = rescale(train_features, rescale_base)
     
-    nn = MLPClassifier(hidden_layer_sizes = (400, 200)) # , batch_size = len(train_labels))#, alpha = input_alpha)#, tol = 1e-5)#, activation= "logistic")
+    nn = MLPClassifier(hidden_layer_sizes = layers) # , batch_size = len(train_labels))#, alpha = input_alpha)#, tol = 1e-5)#, activation= "logistic")
     print('Training neural network...')
     start_time = datetime.now()
     nn.fit(train_features_s, train_labels)
