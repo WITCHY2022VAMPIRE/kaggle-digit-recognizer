@@ -1,20 +1,25 @@
 import numpy as np
 #from sklearn.preprocessing import StandardScaler # scaling data
 from sklearn.neural_network import MLPClassifier # neural network
+from datetime import datetime # Timing
 
 def rescale(data_features, max_value, min_value = 0.0):
     return (data_features - min_value) / (max_value - min_value)
 
-def train_neural_network(train_features, train_labels, rescale_base, input_alpha):
+def train_neural_network(train_features, train_labels, rescale_base, input_alpha = 0.0001):
     # Rescale data
     print('Rescaling training data...')
     train_features_s = rescale(train_features, rescale_base)
     
-    nn = MLPClassifier(hidden_layer_sizes = (100, 100), max_iter = 400, alpha= input_alpha, activation= "logistic")
+    nn = MLPClassifier(hidden_layer_sizes = (400, 100), max_iter = 2000, alpha = input_alpha)#, activation= "logistic")
     print('Training neural network...')
+    start_time = datetime.now()
     nn.fit(train_features_s, train_labels)
+    end_time = datetime.now()
     print('Lost: ', nn.loss_)
     print('Train score: ', nn.score(train_features_s, train_labels))
+    print('Iteration: ', nn.n_iter_)
+    print('Time used: ', str(end_time - start_time))
     return nn
 
 def test_neural_network(trained_neural_network, test_features, test_labels, rescale_base):
@@ -31,9 +36,9 @@ def test_neural_network(trained_neural_network, test_features, test_labels, resc
     print('Correct test cases: ', n_correct)
     print('Accuracy: ', n_correct / n_total )
     
-    wrong_features= []
-    wrong_labels= []
-    wrong_predict= []
+    wrong_features = []
+    wrong_labels = []
+    wrong_predict = []
     for i in range(len(test_labels)):
         if test_predict[i] != test_labels[i]:
             wrong_features.append(test_features[i])
