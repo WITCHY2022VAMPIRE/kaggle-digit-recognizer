@@ -11,7 +11,7 @@ def train_neural_network(train_features, train_labels, rescale_base, input_alpha
     print('Rescaling training data...')
     train_features_s = rescale(train_features, rescale_base)
     
-    nn = MLPClassifier(hidden_layer_sizes = (400, 100), max_iter = 2000, alpha = input_alpha)#, activation= "logistic")
+    nn = MLPClassifier(hidden_layer_sizes = (400, 200))# , batch_size = len(train_labels))#, alpha = input_alpha)#, tol = 1e-5)#, activation= "logistic")
     print('Training neural network...')
     start_time = datetime.now()
     nn.fit(train_features_s, train_labels)
