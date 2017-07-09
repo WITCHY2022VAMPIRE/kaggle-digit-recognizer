@@ -6,7 +6,7 @@ def pca_reduction(features, RATIO_EXP= 0.95):
     
     
     pca_model= PCA()
-    pca_model.fit(features)
+    f_transformed= pca_model.fit_transform(features)
     
 #    accVR= list( itertools.accumulate(pca_model.explained_variance_ratio_) )
 #    plt.plot(pca_model.explained_variance_ratio_)
@@ -17,6 +17,8 @@ def pca_reduction(features, RATIO_EXP= 0.95):
     for i, r in enumerate(pca_model.explained_variance_ratio_):
         acc += r
         if acc > RATIO_EXP: n_rf= i+1; break
-    
-    return pca_model.transform(features)[:n_rf]
+   
+    print("Reduce size to:", n_rf)
+    return f_transformed[:,:n_rf]
+#    return f_transformed
     
