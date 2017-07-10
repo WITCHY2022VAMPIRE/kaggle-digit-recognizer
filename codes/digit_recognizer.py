@@ -11,8 +11,8 @@ rescale_base = 255
 test_split = 3000
 print_wrong_cases = True
 output_predict = True
-test_layers_combination = True
-use_PCA = True
+test_layers_combination = False
+use_PCA = False
 tune_parameters = False
 avg_run = 3
 
@@ -107,10 +107,7 @@ if __name__ == '__main__':
         trained_nn = par_tune(train_features, train_labels)        
     else:
         ## Training NN and get results ######
-        train_f_shuff, train_l_shuff, test_f_shuff, test_l_shuff= make_train_test(train_features, train_labels, test_split)
-            
-        trained_nn = nn.train_neural_network(train_f_shuff, train_l_shuff, rescale_base, hidden_layer_sizes = (700,), tol= 2e-5)
-        n_cor_i, n_tot_i, wrong_f, wrong_l, wrong_p = nn.test_neural_network(trained_nn, test_f_shuff, test_l_shuff, rescale_base)        
+        trained_nn = nn.train_neural_network(train_features, train_labels, rescale_base, hidden_layer_sizes = (700), tol= 1e-10)
 
     ###### Print out wrong cases ######
     if print_wrong_cases and not tune_parameters and not use_PCA:
