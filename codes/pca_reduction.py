@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 import itertools
 
 def pca_reduction(features, RATIO_EXP= 0.95):
-    
-    
+
     pca_model= PCA()
     f_transformed= pca_model.fit_transform(features)
     
@@ -19,6 +18,8 @@ def pca_reduction(features, RATIO_EXP= 0.95):
         if acc > RATIO_EXP: n_rf= i+1; break
    
     print("Reduce size to:", n_rf)
-    return f_transformed[:,:n_rf]
+    return f_transformed[:,:n_rf], pca_model, n_rf
 #    return f_transformed
     
+def pca_transform(features, pca_model, n_rf):
+    return pca_model.transform(features)[:,:n_rf]

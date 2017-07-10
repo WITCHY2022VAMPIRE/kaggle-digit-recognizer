@@ -23,7 +23,8 @@ def test_neural_network(trained_neural_network, test_features, test_labels, resc
     test_predict = neural_network_predict(trained_neural_network, test_features, rescale_base)
 
     #print('Sklearn test score: ', trained_neural_network.score(test_features_s, test_labels))
-    n_correct = np.sum(test_predict == test_labels)
+    correctness = test_predict == test_labels
+    n_correct = np.sum(correctness)
     n_total = len(test_labels)
     print('Correct cases / Total cases: ', n_correct, '/', n_total)
     print('--- Accuracy: ', n_correct / n_total, " ---" )
@@ -32,12 +33,12 @@ def test_neural_network(trained_neural_network, test_features, test_labels, resc
     wrong_labels = []
     wrong_predict = []
     for i in range(len(test_labels)):
-        if test_predict[i] != test_labels[i]:
+        if not correctness[i]:
             wrong_features.append(test_features[i])
             wrong_labels.append(test_labels[i])
             wrong_predict.append(test_predict[i])
 
-    return wrong_features, wrong_labels, wrong_predict
+    return n_correct, n_total, wrong_features, wrong_labels, wrong_predict
 
 def neural_network_predict(trained_neural_network, test_features, rescale_base):
 #    print('Rescaling test data...')
